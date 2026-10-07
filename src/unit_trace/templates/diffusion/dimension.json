@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "One-dimensional diffusion estimate",
+  "variables": [
+    {
+      "id": "displacement",
+      "label": "displacement",
+      "value": "2",
+      "unit": "mm"
+    },
+    {
+      "id": "time",
+      "label": "time",
+      "value": "4",
+      "unit": "s"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "square",
+      "label": "square",
+      "expression": "displacement + time",
+      "outputUnit": "mm**2"
+    },
+    {
+      "id": "diffusivity",
+      "label": "diffusivity",
+      "expression": "square / (2 * time)",
+      "outputUnit": "m**2/s"
+    }
+  ]
+}

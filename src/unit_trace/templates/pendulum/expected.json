@@ -1,0 +1,27 @@
+{
+  "normal": {
+    "periodSquare": {
+      "value": 4,
+      "dimensionality": "[time] ** 2"
+    },
+    "gravity": {
+      "value": 9.869604401089358,
+      "dimensionality": "[length] / [time] ** 2"
+    }
+  },
+  "dimension": {
+    "root": "periodSquare",
+    "span": {
+      "start": 0,
+      "end": 15
+    },
+    "blocked": [
+      "gravity"
+    ]
+  },
+  "scale": {
+    "input": "period",
+    "target": "gravity",
+    "value": 9869604.401089357
+  }
+}

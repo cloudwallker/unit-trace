@@ -1,0 +1,6 @@
+# Fixed official PyPI wheels; runtime has no extras.
+Pint==0.25.2 --hash=sha256:ca35ab1d8eeeb6f7d9942b3cb5f34ca42b61cdd5fb3eae79531553dcca04dda7
+flexcache==0.3 --hash=sha256:d43c9fea82336af6e0115e308d9d33a185390b8346a017564611f1466dcd2e32
+flexparser==0.4 --hash=sha256:3738b456192dcb3e15620f324c447721023c0293f6af9955b481e91d00179846
+platformdirs==4.4.0 --hash=sha256:abd01743f24e5287cd7a5db3752faf1a2d65353f38ec26d98e25a6db65958c85
+typing_extensions==4.15.0 --hash=sha256:f0fa19c6845758ab08074a0cfa8b7aecb71c999ca73d62883bc25cc018c4e548

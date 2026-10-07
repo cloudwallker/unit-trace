@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "Uniform-sample density",
+  "variables": [
+    {
+      "id": "mass",
+      "label": "mass",
+      "value": "25",
+      "unit": "g"
+    },
+    {
+      "id": "volume",
+      "label": "volume",
+      "value": "10",
+      "unit": "cm**3"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "density",
+      "label": "density",
+      "expression": "mass / volume",
+      "outputUnit": "kg/m**3"
+    },
+    {
+      "id": "sampleMass",
+      "label": "sampleMass",
+      "expression": "density * volume",
+      "outputUnit": "g"
+    }
+  ]
+}

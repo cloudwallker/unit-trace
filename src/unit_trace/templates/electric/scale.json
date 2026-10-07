@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "Ideal resistor power",
+  "variables": [
+    {
+      "id": "voltage",
+      "label": "voltage",
+      "value": "12",
+      "unit": "V"
+    },
+    {
+      "id": "resistance",
+      "label": "resistance",
+      "value": "6",
+      "unit": "kohm"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "current",
+      "label": "current",
+      "expression": "voltage / resistance",
+      "outputUnit": "A"
+    },
+    {
+      "id": "power",
+      "label": "power",
+      "expression": "voltage * current",
+      "outputUnit": "W"
+    }
+  ]
+}

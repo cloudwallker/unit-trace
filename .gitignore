@@ -1,0 +1,21 @@
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.verify-build/
+.verify-wheel/
+.verify-work/
+.env
+.env.*
+!.env.example
+
+# Local publication and development artifacts
+/.github-publish-work/
+/docs/superpowers/
+/.superpowers/
+/.codex/
+/.claude/
+/.agents/
+.pytest_cache/

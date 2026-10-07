@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "Small-angle ideal pendulum gravity estimate",
+  "variables": [
+    {
+      "id": "length",
+      "label": "length",
+      "value": "1",
+      "unit": "m"
+    },
+    {
+      "id": "period",
+      "label": "period",
+      "value": "2",
+      "unit": "s"
+    },
+    {
+      "id": "pi",
+      "label": "pi",
+      "value": "3.141592653589793",
+      "unit": "1"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "periodSquare",
+      "label": "periodSquare",
+      "expression": "period**2",
+      "outputUnit": "s**2"
+    },
+    {
+      "id": "gravity",
+      "label": "gravity",
+      "expression": "4 * pi**2 * length / periodSquare",
+      "outputUnit": "m/s**2"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "Uniform mass concentration",
+  "variables": [
+    {
+      "id": "mass",
+      "label": "mass",
+      "value": "10",
+      "unit": "mg"
+    },
+    {
+      "id": "volume",
+      "label": "volume",
+      "value": "50",
+      "unit": "mL"
+    },
+    {
+      "id": "aliquot",
+      "label": "aliquot",
+      "value": "5",
+      "unit": "mL"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "concentration",
+      "label": "concentration",
+      "expression": "mass / volume",
+      "outputUnit": "mg/L"
+    },
+    {
+      "id": "aliquotMass",
+      "label": "aliquotMass",
+      "expression": "concentration * aliquot",
+      "outputUnit": "mg"
+    }
+  ]
+}

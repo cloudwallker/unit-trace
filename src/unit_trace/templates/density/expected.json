@@ -1,0 +1,27 @@
+{
+  "normal": {
+    "density": {
+      "value": 2500,
+      "dimensionality": "[mass] / [length] ** 3"
+    },
+    "sampleMass": {
+      "value": 25,
+      "dimensionality": "[mass]"
+    }
+  },
+  "dimension": {
+    "root": "density",
+    "span": {
+      "start": 0,
+      "end": 13
+    },
+    "blocked": [
+      "sampleMass"
+    ]
+  },
+  "scale": {
+    "input": "mass",
+    "target": "density",
+    "value": 2500000
+  }
+}

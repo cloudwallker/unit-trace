@@ -1,0 +1,27 @@
+{
+  "normal": {
+    "square": {
+      "value": 4,
+      "dimensionality": "[length] ** 2"
+    },
+    "diffusivity": {
+      "value": 5e-07,
+      "dimensionality": "[length] ** 2 / [time]"
+    }
+  },
+  "dimension": {
+    "root": "square",
+    "span": {
+      "start": 0,
+      "end": 19
+    },
+    "blocked": [
+      "diffusivity"
+    ]
+  },
+  "scale": {
+    "input": "time",
+    "target": "diffusivity",
+    "value": 0.0005
+  }
+}

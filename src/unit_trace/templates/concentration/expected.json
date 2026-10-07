@@ -1,0 +1,27 @@
+{
+  "normal": {
+    "concentration": {
+      "value": 200,
+      "dimensionality": "[mass] / [length] ** 3"
+    },
+    "aliquotMass": {
+      "value": 1,
+      "dimensionality": "[mass]"
+    }
+  },
+  "dimension": {
+    "root": "concentration",
+    "span": {
+      "start": 0,
+      "end": 13
+    },
+    "blocked": [
+      "aliquotMass"
+    ]
+  },
+  "scale": {
+    "input": "mass",
+    "target": "concentration",
+    "value": 200000
+  }
+}

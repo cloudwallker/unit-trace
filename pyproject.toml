@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools==80.9.0", "wheel==0.45.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "unit-trace"
+version = "0.1.0"
+description = "Bounded scalar formula, unit and dependency validation"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+requires-python = ">=3.12,<3.13"
+dependencies = ["Pint==0.25.2", "flexcache==0.3", "flexparser==0.4", "platformdirs==4.4.0", "typing_extensions==4.15.0"]
+
+[project.scripts]
+unit-trace = "unit_trace.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+unit_trace = ["web/*.html", "web/*.js", "web/*.css", "templates/*/*.json"]

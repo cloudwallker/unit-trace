@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "Rectangular-channel volumetric flow",
+  "variables": [
+    {
+      "id": "width",
+      "label": "width",
+      "value": "2",
+      "unit": "cm"
+    },
+    {
+      "id": "height",
+      "label": "height",
+      "value": "3",
+      "unit": "cm"
+    },
+    {
+      "id": "speed",
+      "label": "speed",
+      "value": "50",
+      "unit": "m/s"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "area",
+      "label": "area",
+      "expression": "width * height",
+      "outputUnit": "cm**2"
+    },
+    {
+      "id": "flow",
+      "label": "flow",
+      "expression": "area * speed",
+      "outputUnit": "m**3/s"
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "Nonrelativistic kinetic energy",
+  "variables": [
+    {
+      "id": "mass",
+      "label": "mass",
+      "value": "2",
+      "unit": "kg"
+    },
+    {
+      "id": "speed",
+      "label": "speed",
+      "value": "3",
+      "unit": "m/s"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "energy",
+      "label": "energy",
+      "expression": "mass + speed**2",
+      "outputUnit": "J"
+    },
+    {
+      "id": "specific",
+      "label": "specific",
+      "expression": "energy / mass",
+      "outputUnit": "J/kg"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "profile": "unit-trace-scalar-v1",
+  "title": "Static spring stiffness",
+  "variables": [
+    {
+      "id": "mass",
+      "label": "mass",
+      "value": "200",
+      "unit": "g"
+    },
+    {
+      "id": "gravity",
+      "label": "gravity",
+      "value": "9.8",
+      "unit": "m/s**2"
+    },
+    {
+      "id": "extension",
+      "label": "extension",
+      "value": "20",
+      "unit": "m"
+    }
+  ],
+  "formulas": [
+    {
+      "id": "force",
+      "label": "force",
+      "expression": "mass * gravity",
+      "outputUnit": "N"
+    },
+    {
+      "id": "stiffness",
+      "label": "stiffness",
+      "expression": "force / extension",
+      "outputUnit": "N/m"
+    }
+  ]
+}

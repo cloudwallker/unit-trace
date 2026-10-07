@@ -1,0 +1,27 @@
+{
+  "normal": {
+    "area": {
+      "value": 6,
+      "dimensionality": "[length] ** 2"
+    },
+    "flow": {
+      "value": 0.0003,
+      "dimensionality": "[length] ** 3 / [time]"
+    }
+  },
+  "dimension": {
+    "root": "area",
+    "span": {
+      "start": 0,
+      "end": 17
+    },
+    "blocked": [
+      "flow"
+    ]
+  },
+  "scale": {
+    "input": "speed",
+    "target": "flow",
+    "value": 0.03
+  }
+}

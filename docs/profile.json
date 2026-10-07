@@ -1,0 +1,18 @@
+{
+  "id": "unit-trace-scalar-v1",
+  "schemaVersion": 1,
+  "pythonVersion": "3.12.14",
+  "pintVersion": "0.25.2",
+  "dependencies": {
+    "Pint": "0.25.2",
+    "flexcache": "0.3",
+    "flexparser": "0.4",
+    "platformdirs": "4.4.0",
+    "typing_extensions": "4.15.0"
+  },
+  "unitWhitelistVersion": 1,
+  "definitionHashes": {
+    "pint/default_en.txt": "7cf3f1972ff0b24c394a7d866fb439be6a006469e57f18a59d52262735522bf5",
+    "pint/constants_en.txt": "a713dd2974ee78de1fb89c9ac633afdc262938b07ea77a5275ae3091147b2e7b"
+  }
+}

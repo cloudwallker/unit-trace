@@ -1,0 +1,32 @@
+name: scalar-tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  windows-python:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12.14'
+      - name: Install locked runtime and build tools
+        shell: pwsh
+        run: |
+          Get-ChildItem Env:PIP_* | Remove-Item
+          $env:PIP_CONFIG_FILE = 'NUL'
+          python -m pip --isolated install --require-hashes -r requirements.lock
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pip --isolated install --require-hashes -r requirements-build.lock
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pip --isolated install --no-deps --no-build-isolation .
+          exit $LASTEXITCODE
+      - name: Tests and dependency consistency
+        shell: pwsh
+        run: |
+          python -m unittest discover -s tests -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m pip check
+          exit $LASTEXITCODE
+      - name: Build wheel
+        run: python -m pip --isolated wheel --no-deps --no-build-isolation . -w dist

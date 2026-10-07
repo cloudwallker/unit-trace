@@ -1,0 +1,27 @@
+{
+  "normal": {
+    "energy": {
+      "value": 9,
+      "dimensionality": "[mass] * [length] ** 2 / [time] ** 2"
+    },
+    "specific": {
+      "value": 4.5,
+      "dimensionality": "[length] ** 2 / [time] ** 2"
+    }
+  },
+  "dimension": {
+    "root": "energy",
+    "span": {
+      "start": 0,
+      "end": 15
+    },
+    "blocked": [
+      "specific"
+    ]
+  },
+  "scale": {
+    "input": "mass",
+    "target": "energy",
+    "value": 0.009
+  }
+}

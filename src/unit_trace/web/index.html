@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="unit-trace-session" content="__SESSION_TOKEN__">
+  <title>UnitTrace · Follow the units</title>
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <header class="masthead"><div><span class="brand-mark" aria-hidden="true">U↗</span><strong>UnitTrace</strong><span class="eyebrow">LOCAL EXPERIMENT WORKSPACE</span></div><span id="connection-state" role="status">Connecting</span></header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">FROM INPUT TO EXPLANATION</p><h1>Follow the units.<br>Find the first wrong step.</h1><p>Trace scalar formulas, inspect conversions, and see where a result comes from.</p></div><div class="run-block"><button id="run" class="primary">Run calculation <span aria-hidden="true">↗</span></button><span id="calculation-state" role="status">Pending calculation</span></div></div>
+    <section class="toolbar" aria-label="Experiment controls">
+      <label>Experiment<select id="template" aria-label="Experiment"></select></label>
+      <div class="variant-controls"><button id="normal">Normal</button><button id="dimension">Dimension error</button><button id="scale">Scale change</button><button id="restore">Restore normal</button></div>
+      <label class="import-control">Import JSON<input type="file" id="import-project" accept=".json,application/json"></label>
+    </section>
+    <p id="variant-description" class="muted"></p><p id="notice" role="status"></p>
+    <section id="profile-mismatch" hidden aria-label="Engine profile mismatch"><h2>engine_mismatch</h2><p>The saved engine differs. Its results will be discarded.</p><pre></pre><button id="accept-profile">Recompute with current engine</button><button id="cancel-profile">Cancel import</button></section>
+    <nav class="mobile-tabs" aria-label="Workspace panels"><button data-panel="editor">Inputs</button><button data-panel="graph-panel">Graph</button><button data-panel="detail-panel">Details</button></nav>
+    <div class="workspace">
+      <section id="editor" class="panel"><div class="panel-heading"><h2><span>01</span> Define the experiment</h2></div>
+        <label>Project title<input id="project-title" maxlength="120"></label>
+        <div class="section-heading"><h3>Variables</h3><button id="add-variable">Add variable</button></div><div id="variables"></div>
+        <div class="section-heading"><h3>Formulas</h3><button id="add-formula">Add formula</button></div><div id="formulas"></div>
+        <p class="muted">Editing an input unit reinterprets its number. Use Convert to preserve the physical quantity. Ranges are your own expectations.</p>
+      </section>
+      <section id="graph-panel" class="panel"><div class="panel-heading"><h2><span>02</span> Follow the dependencies</h2></div><div class="legend"><span class="ok">● ok</span><span class="warning">● warning</span><span class="error">● error</span><span class="blocked">● blocked</span></div><p id="changes" class="muted"></p><div id="graph" aria-label="Dependency graph"></div><h3>Topological list</h3><div id="node-list"></div></section>
+      <section id="detail-panel" class="panel"><div class="panel-heading"><h2><span>03</span> Inspect the reasoning</h2></div><div id="details"><p>Select a node to inspect its units and operations.</p></div></section>
+    </div>
+    <section class="issues-section"><h2>Checks &amp; next steps</h2><div id="issues" aria-live="polite"></div></section>
+    <section class="export-section"><div><h2>Keep the experiment</h2><p>Exports include your title, variables, formulas, ranges, computed explanations, and engine profile.</p><p class="muted">JSON can be recomputed. SVG and HTML preserve the current snapshot.</p></div><div class="export-buttons"><button id="export-json" disabled>Export JSON</button><button id="export-svg" disabled>Export SVG</button><button id="export-html" disabled>Export HTML</button></div></section>
+    <footer>Scalar profile v1 · At most 80 variables and 20 formulas · Dimensional consistency does not prove a model correct.<details><summary>Current engine profile</summary><pre id="engine-profile"></pre></details></footer>
+  </main>
+</body>
+</html>
