@@ -1,4 +1,5 @@
 import os
+import platform
 from pathlib import Path
 import tempfile
 import unittest
@@ -56,7 +57,8 @@ class UnitTests(unittest.TestCase):
     def test_profile_has_actual_dependency_versions_and_resource_hashes(self):
         data = get_profile().to_json()
         self.assertEqual(data['pintVersion'], '0.25.2')
-        self.assertEqual(data['pythonVersion'], '3.12.14')
+        self.assertEqual(data['pythonVersion'], platform.python_version())
+        self.assertEqual(data['pythonVersion'].split('.')[:2], ['3', '12'])
         self.assertEqual(data['dependencies']['flexparser'], '0.4')
         self.assertEqual(set(data['dependencies']), {'Pint', 'flexcache', 'flexparser', 'platformdirs', 'typing_extensions'})
         self.assertIn('pint/default_en.txt', data['definitionHashes'])
