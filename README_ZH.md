@@ -2,7 +2,7 @@
 
 ### 在标量公式中追踪单位的本地工作台
 
-**检查单位、追踪依赖，找到第一步不兼容的运算。将实验保存为可复算的 JSON，或用离线 SVG、HTML 分享依赖图与计算解释。**
+**在命令行换算单个物理量，或沿着公式依赖找到第一步不兼容的运算。将实验保存为可复算的 JSON，或用离线 SVG、HTML 分享依赖图与计算解释。**
 
 [English](README.md) | 中文
 
@@ -64,10 +64,13 @@ py -3.12 -m venv .venv
 
 ```powershell
 unit-trace --version
+unit-trace convert 72 --from km/h --to m/s
 unit-trace demo flow --variant dimension --json experiment.json
 unit-trace evaluate experiment.json --json result.json --svg graph.svg --html report.html
 unit-trace serve --port 0
 ```
+
+`convert` 以 JSON 输出换算结果和倍数。上例将 72 km/h 换算为 20 m/s，换算倍数约为 0.277778。也支持带符号的小数和科学计数法，例如 `unit-trace convert -1e-3 --from m --to cm`。
 
 `demo` 输出 Project，`evaluate` 始终重新计算。已有输出需要 `--overwrite`；该选项仍不能覆盖输入及其硬链接、符号链接别名，不同输出也不能使用同一个文件。退出码：**0** 无问题，**1** 有错误或 blocked，**2** 仅警告，**3** 输入无效、限额、I/O 或取消；优先级为 3 > 1 > 2 > 0。
 

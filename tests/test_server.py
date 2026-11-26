@@ -190,6 +190,21 @@ class ApiTests(RunningServer):
         self.assertEqual(report['removedIds'], ['old'])
         self.assertEqual(report['affectedIds'], ['x', 'area'])
 
+    def test_conversion_issues_identify_the_request_field(self):
+        for value, source, target, expected in [
+            ('1', 'typo', 'm', ('unsupported_unit', 'fromUnit')),
+            ('1', 'm', 'typo', ('unsupported_unit', 'toUnit')),
+            ('1', 'm', 's', ('conversion_mismatch', 'toUnit')),
+            ('bad', 'm', 'cm', ('invalid_schema', 'value')),
+            ('1e100', 'm', 'cm', ('numeric_limit', 'value')),
+            ('0', 'nm**12', 'km**12', ('numeric_limit', 'toUnit')),
+        ]:
+            with self.subTest(expected=expected):
+                status, _, body = self.request('/api/convert', {'value': value, 'fromUnit': source, 'toUnit': target})
+                self.assertEqual(status, 422)
+                issue = json.loads(body)['errors'][0]
+                self.assertEqual((issue['code'], issue['field']), expected)
+
     def test_zero_conversion_keeps_independent_factor(self):
         status, _, body = self.request('/api/convert', {'value': '0', 'fromUnit': 'cm', 'toUnit': 'm'})
         self.assertEqual(status, 200)

@@ -22,7 +22,12 @@ def quantity_view(quantity) -> QuantityView:
 
 
 def checked_conversion(quantity, target, reason):
-    factor = checked_factor(quantity.units, target, quantity._REGISTRY)
+    try:
+        factor = checked_factor(quantity.units, target, quantity._REGISTRY)
+    except CalculationError as caught:
+        if reason == 'input':
+            raise CalculationError(_located(caught.issue, None, 'toUnit')) from None
+        raise
     try:
         result = quantity.to(target)
     except (OverflowError, ZeroDivisionError):
@@ -32,10 +37,17 @@ def checked_conversion(quantity, target, reason):
 
 
 def convert_input(value: str, from_unit: str, to_unit: str) -> QuantityView:
+    quantity, _ = convert_input_with_details(value, from_unit, to_unit)
+    return quantity
+
+
+def convert_input_with_details(value: str, from_unit: str, to_unit: str) -> tuple[QuantityView, Conversion]:
     registry = make_registry()
-    quantity = registry.Quantity(validate_number(value), resolve_unit(from_unit, registry))
-    result, _ = checked_conversion(quantity, resolve_unit(to_unit, registry), 'input')
-    return quantity_view(result)
+    number = validate_number(value)
+    source = _resolve(from_unit, registry, None, 'fromUnit')
+    target = _resolve(to_unit, registry, None, 'toUnit')
+    result, conversion = checked_conversion(registry.Quantity(number, source), target, 'input')
+    return quantity_view(result), Conversion('input', from_unit, to_unit, conversion.factor)
 
 
 def _operation(op, operands, changes):
@@ -69,7 +81,8 @@ def _operation(op, operands, changes):
 
 def _located(issue, identifier, field, span=None):
     suffix = f':{span.start}:{span.end}' if span else ''
-    return Issue(f'{issue.code}:{identifier}:{field}{suffix}', issue.code, field,
+    location = f'{identifier}:{field}' if identifier is not None else field
+    return Issue(f'{issue.code}:{location}{suffix}', issue.code, field,
                  issue.message, issue.related_ids, identifier, span)
 
 

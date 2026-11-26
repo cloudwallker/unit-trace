@@ -174,6 +174,14 @@ quantity. `units.conversion_factor(from_unit, to_unit) -> float` uses a unit-val
 be finite, nonzero and within scalar bounds. CalculationError.issue is the
 single-operation failure interface; invalid NumberText/UnitText remain structural.
 
+The standalone `unit-trace convert VALUE --from UNIT --to UNIT` command and
+`/api/convert` return the same `{quantity, conversion}` object. The conversion
+record preserves both input unit spellings and includes the factor even when
+the input is zero. An invalid unit is reported at `fromUnit` or `toUnit`.
+Incompatible dimensions or an out-of-range factor are reported at `toUnit`;
+an invalid value or out-of-range converted magnitude is reported at `value`.
+The CLI exits 0 on success, 1 for a calculation error, and 3 for invalid input.
+
 ## Dependency changes and canonical bundle JSON
 
 `compare_projects(current, previous) -> ChangeSet` compares value/unit for

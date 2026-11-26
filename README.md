@@ -2,7 +2,7 @@
 
 ### A local workspace for tracing units through scalar formulas
 
-**Inspect units, trace dependencies, and find the first incompatible operation. Save experiments as recomputable JSON or share their graph and explanations as offline SVG and HTML.**
+**Convert a single quantity from the command line, or trace a formula through its dependencies to find the first incompatible operation. Save experiments as recomputable JSON or share their graph and explanations as offline SVG and HTML.**
 
 English | [中文](README_ZH.md)
 
@@ -64,10 +64,13 @@ Use the assumptions above when interpreting each result. Dimensional consistency
 
 ```powershell
 unit-trace --version
+unit-trace convert 72 --from km/h --to m/s
 unit-trace demo flow --variant dimension --json experiment.json
 unit-trace evaluate experiment.json --json result.json --svg graph.svg --html report.html
 unit-trace serve --port 0
 ```
+
+`convert` writes the converted quantity and the multiplicative factor to stdout as JSON. The example gives 20 m/s and a factor of about 0.277778. Signed decimals and scientific notation also work, for example `unit-trace convert -1e-3 --from m --to cm`.
 
 `demo` writes a Project; `evaluate` always recomputes it. Existing output files require `--overwrite`. The input file and its hardlink/symlink aliases cannot be overwritten, even with that option. Each output needs its own path. Exit status: **0** clean, **1** errors/blocked nodes, **2** warnings only, **3** invalid input, limits, I/O or cancellation; priority is 3 > 1 > 2 > 0.
 
