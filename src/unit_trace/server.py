@@ -9,12 +9,11 @@ import socket
 import threading
 import time
 
-from .engine import convert_input, evaluate_project
+from .engine import convert_input_with_details, evaluate_project
 from .exports import render_html, render_svg
-from .models import CalculationError, Conversion, Issue, ProjectValidationError, input_error
+from .models import CalculationError, Issue, ProjectValidationError, input_error
 from .profile import get_profile
 from .serialization import serialize_bundle
-from .units import conversion_factor
 from .validation import load_json, parse_project
 
 TEMPLATE_IDS = ('flow', 'density', 'spring', 'electric', 'energy', 'diffusion', 'concentration', 'pendulum')
@@ -273,9 +272,8 @@ class _Handler(BaseHTTPRequestHandler):
             report = evaluate_project(parse_project(data['project']), previous)
             self._json(200, {'revision': revision, 'report': report.to_json()})
         elif self.path == '/api/convert':
-            q = convert_input(data['value'], data['fromUnit'], data['toUnit'])
-            factor = conversion_factor(data['fromUnit'], data['toUnit'])
-            self._json(200, {'quantity': q.to_json(), 'conversion': Conversion('input', data['fromUnit'], data['toUnit'], factor).to_json()})
+            quantity, conversion = convert_input_with_details(data['value'], data['fromUnit'], data['toUnit'])
+            self._json(200, {'quantity': quantity.to_json(), 'conversion': conversion.to_json()})
         else:
             if data['format'] not in ('json', 'svg', 'html'):
                 raise input_error('invalid_schema', 'format', 'Unsupported export format.')

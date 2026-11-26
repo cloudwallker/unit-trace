@@ -9,12 +9,12 @@ import sys
 import webbrowser
 
 from . import __version__
-from .engine import evaluate_project
+from .engine import convert_input_with_details, evaluate_project
 from .exports import render_html, render_svg
-from .models import Issue, ProjectValidationError, input_error
+from .models import CalculationError, Issue, ProjectValidationError, input_error
 from .serialization import parse_bundle, serialize_bundle
 from .server import TEMPLATE_IDS, make_server, templates
-from .validation import load_json
+from .validation import NUMBER_PATTERN, load_json
 
 
 class _Parser(argparse.ArgumentParser):
@@ -75,6 +75,12 @@ def main(argv: list[str] | None = None) -> int:
     serve = commands.add_parser('serve', help='Start a private loopback session.')
     serve.add_argument('--port', type=int, default=0)
     serve.add_argument('--open', action='store_true')
+    convert = commands.add_parser('convert', help='Convert one quantity and print its value and factor as JSON.')
+    # argparse's default negative-number pattern excludes exponents and trailing decimal points.
+    convert._negative_number_matcher = NUMBER_PATTERN
+    convert.add_argument('value', help='Decimal quantity to convert.')
+    convert.add_argument('--from', dest='from_unit', required=True, metavar='UNIT')
+    convert.add_argument('--to', dest='to_unit', required=True, metavar='UNIT')
     evaluate = commands.add_parser('evaluate', help='Recompute a Project or JSON Bundle.')
     evaluate.add_argument('input')
     for kind in ('json', 'svg', 'html'):
@@ -87,6 +93,10 @@ def main(argv: list[str] | None = None) -> int:
     demo.add_argument('--json')
     try:
         args = parser.parse_args(argv)
+        if args.command == 'convert':
+            quantity, conversion = convert_input_with_details(args.value, args.from_unit, args.to_unit)
+            print(json.dumps({'quantity': quantity.to_json(), 'conversion': conversion.to_json()}))
+            return 0
         if args.command == 'serve':
             server = make_server(args.port)
             old_break = None
@@ -133,6 +143,9 @@ def main(argv: list[str] | None = None) -> int:
     except ProjectValidationError as exc:
         print(json.dumps({'errors': [i.to_json() for i in exc.issues]}), file=sys.stderr)
         return 3
+    except CalculationError as exc:
+        print(json.dumps({'errors': [exc.issue.to_json()]}), file=sys.stderr)
+        return 1
     except (OSError, ValueError, KeyboardInterrupt):
         issue = Issue('io_or_cancelled', 'invalid_schema', '$', 'Operation failed or was cancelled safely.')
         print(json.dumps({'errors': [issue.to_json()]}), file=sys.stderr)

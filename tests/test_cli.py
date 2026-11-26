@@ -30,6 +30,31 @@ class CommandTests(unittest.TestCase):
     def write_project(self, data):
         self.source.write_text(json.dumps(data), encoding='utf-8')
 
+    def test_convert_reports_quantity_and_factor(self):
+        result = self.run_cli('convert', '72', '--from', 'km/h', '--to', 'm/s')
+        self.assertEqual(result.returncode, 0, result.stderr)
+        data = json.loads(result.stdout)
+        self.assertAlmostEqual(data['quantity']['value'], 20)
+        self.assertAlmostEqual(data['conversion']['factor'], 1 / 3.6)
+        self.assertEqual(data['conversion']['fromUnit'], 'km/h')
+        self.assertEqual(data['conversion']['toUnit'], 'm/s')
+
+    def test_convert_accepts_signed_number_text(self):
+        for value, expected in [('-1e-3', -0.1), ('-1.', -100), ('-.5', -50)]:
+            with self.subTest(value=value):
+                result = self.run_cli('convert', value, '--from', 'm', '--to', 'cm')
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertAlmostEqual(json.loads(result.stdout)['quantity']['value'], expected)
+
+    def test_convert_rejects_incompatible_and_unknown_units(self):
+        for unit, code, status in [('s', 'conversion_mismatch', 1), ('typo', 'unsupported_unit', 3)]:
+            with self.subTest(unit=unit):
+                result = self.run_cli('convert', '1', '--from', 'm', '--to', unit)
+                self.assertEqual(result.returncode, status, result.stderr)
+                self.assertEqual(result.stdout.strip(), b'')
+                error = json.loads(result.stderr)['errors'][0]
+                self.assertEqual((error['code'], error['field']), (code, 'toUnit'))
+
     def test_version_and_all_demo_variants(self):
         version = self.run_cli('--version')
         self.assertEqual(version.returncode, 0, version.stderr)
